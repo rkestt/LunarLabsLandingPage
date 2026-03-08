@@ -16,7 +16,6 @@ export default function ServiceCard({
   icon: Icon,
   title,
   description,
-  value,
   index,
   isFeatured = false,
 }: ServiceCardProps) {
@@ -27,43 +26,35 @@ export default function ServiceCard({
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
       whileHover={{ y: -8 }}
-      className={`relative p-8 rounded-2xl border transition-all duration-300 ${
+      className={`relative p-8 rounded-none border transition-all duration-300 glass-card ${
         isFeatured
-          ? 'bg-gradient-to-br from-primary-500/10 to-secondary-500/10 border-primary-500/30 shadow-glow'
-          : 'bg-dark-charcoal/50 border-border-gray hover:border-primary-500/30 hover:shadow-card-hover'
+          ? 'border-primary-500/50 shadow-purple-glow'
+          : 'border-github-border hover:border-primary-500/30'
       }`}
     >
       {/* Icon */}
-      <div className={`w-14 h-14 rounded-xl flex items-center justify-center mb-6 ${
+      <div className={`w-12 h-12 flex items-center justify-center mb-8 border border-github-border ${
         isFeatured
-          ? 'bg-gradient-primary text-white'
-          : 'bg-border-gray/50 text-primary-400'
+          ? 'bg-primary-500 text-white'
+          : 'bg-github-gray text-primary-500'
       }`}>
-        <Icon size={28} strokeWidth={1.5} />
+        <Icon size={24} strokeWidth={1.5} />
       </div>
 
       {/* Title */}
-      <h3 className="text-xl font-semibold text-white mb-3 font-display">
+      <h3 className="text-xl font-bold text-white mb-4 font-display uppercase tracking-tight">
         {title}
       </h3>
 
       {/* Description */}
-      <p className="text-muted-gray mb-6 leading-relaxed">
+      <p className="text-sm text-cloud-dancer/70 mb-6 leading-relaxed font-medium">
         {description}
       </p>
 
-      {/* Value Tag */}
-      <div className="flex items-center justify-between pt-4 border-t border-border-gray/50">
-        <span className="text-sm text-muted-gray">Starting at</span>
-        <span className={`text-lg font-semibold ${isFeatured ? 'text-primary-400' : 'text-white'}`}>
-          {value}
-        </span>
-      </div>
-
       {/* Featured Badge */}
       {isFeatured && (
-        <div className="absolute -top-3 -right-3 px-3 py-1 bg-gradient-primary text-white text-xs font-medium rounded-full">
-          Most Popular
+        <div className="absolute -top-3 left-6 px-3 py-1 bg-primary-500 text-white text-[10px] font-bold uppercase tracking-tighter">
+          Priority Solution
         </div>
       )}
     </motion.div>

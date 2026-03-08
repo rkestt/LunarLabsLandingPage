@@ -4,124 +4,69 @@ import { motion } from 'framer-motion'
 
 export default function About() {
   return (
-    <section id="about" className="py-24 bg-dark-charcoal/30">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          {/* Left Column - Image/Avatar */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="relative">
-              {/* Gradient Border */}
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary-500 via-secondary-500 to-highlight opacity-50 blur-xl" />
-              
-              {/* Avatar Placeholder */}
-              <div className="relative w-full aspect-square max-w-md mx-auto rounded-2xl bg-dark-charcoal border border-border-gray overflow-hidden flex items-center justify-center">
-                <div className="text-center">
-                  <div className="w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center">
-                    <span className="text-4xl font-bold text-white">LL</span>
-                  </div>
-                  <h3 className="text-xl font-semibold text-white mb-2">Lunar Labs</h3>
-                  <p className="text-muted-gray">Digital Innovation Studio</p>
-                </div>
-              </div>
+    <section id="about" className="w-full h-full py-24 bg-github-black relative overflow-hidden flex items-center">
+      <div className="absolute inset-0 bg-grid-pattern opacity-5" />
+      <div className="max-w-6xl mx-auto px-6 relative z-10 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          {/* 1. Titolo */}
+          <span className="inline-block px-3 py-1 mb-8 text-[10px] font-bold tracking-[0.3em] uppercase text-primary-500 border-l-2 border-primary-500">
+            Identity
+          </span>
+          <h2 className="text-6xl md:text-9xl font-bold text-white mb-16 font-display tracking-tighter uppercase leading-[0.8]">
+            IL METODO <br /> <span className="text-gradient">LUNAR</span>
+          </h2>
 
-              {/* Floating Badge */}
-              <motion.div
-                className="absolute -bottom-6 -right-6 px-6 py-3 bg-dark-charcoal border border-border-gray rounded-xl shadow-card"
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 3, repeat: Infinity }}
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-3 h-3 bg-success rounded-full animate-pulse" />
-                  <span className="text-sm text-white font-medium">Available for Projects</span>
-                </div>
-              </motion.div>
-            </div>
-          </motion.div>
+          {/* 2. Descrizione */}
+          <div className="space-y-8 text-cloud-dancer/70 text-lg md:text-xl font-medium leading-relaxed mb-20 max-w-3xl mx-auto">
+            <p>
+              Lunar Labs è un team di sviluppatori che crede nell&apos;uso di tecnologie 
+              moderne e in un metodo di lavoro solido. Costruiamo sistemi digitali 
+              con rigore, dove l&apos;innovazione incontra la precisione metodologica.
+            </p>
+            <p>
+              Ogni MVP che consegniamo è un pezzo unico di software custom, 
+              ottimizzato per le performance e costruito per scalare. 
+              Ignoriamo il superfluo, ci concentriamo sull&apos;essenziale.
+            </p>
+          </div>
 
-          {/* Right Column - Content */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <span className="inline-block px-4 py-2 mb-4 text-sm font-medium text-primary-400 bg-primary-500/10 rounded-full border border-primary-500/20">
-              About Us
-            </span>
-            
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 font-display">
-              Building the <span className="text-gradient">Future</span> of B2B
-            </h2>
-
-            <div className="space-y-4 text-muted-gray leading-relaxed mb-8">
-              <p>
-                Lunar Labs is a digital innovation studio founded by experienced 
-                engineers and designers who believe in the power of technology to 
-                transform businesses.
-              </p>
-              <p>
-                We specialize in helping B2B companies navigate their digital 
-                transformation journey—from initial concept to scalable products 
-                that drive real business results.
-              </p>
-              <p>
-                Our approach combines technical excellence with strategic thinking, 
-                ensuring every solution we build aligns with your business objectives 
-                and delivers measurable ROI.
-              </p>
-            </div>
-
-            {/* Features List */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+          {/* 3. Pillar e Features insieme */}
+          <div className="pt-16 border-t border-github-border/30 max-w-5xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
               {[
-                'Expert Team',
-                'Agile Process',
-                'Transparent Pricing',
-                'Post-Launch Support',
-              ].map((feature, index) => (
-                <div key={index} className="flex items-center gap-3">
-                  <div className="w-5 h-5 rounded-full bg-secondary-500/20 flex items-center justify-center">
-                    <svg
-                      className="w-3 h-3 text-secondary-400"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M5 13l4 4L19 7"
-                      />
-                    </svg>
-                  </div>
-                  <span className="text-white">{feature}</span>
-                </div>
-              ))}
-            </div>
-
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-6 pt-8 border-t border-border-gray">
-              {[
-                { value: '5+', label: 'Years Experience' },
-                { value: '50+', label: 'Projects Delivered' },
-                { value: '100%', label: 'Client Retention' },
+                { value: '100%', label: 'CORE TRANSPARENCY' },
+                { value: 'STABLE', label: 'TECH STACK' },
+                { value: 'PURE', label: 'EXECUTION' },
               ].map((stat, index) => (
-                <div key={index}>
-                  <div className="text-2xl md:text-3xl font-bold text-white mb-1">
+                <div key={index} className="text-center group">
+                  <div className="text-3xl md:text-5xl font-bold text-white mb-2 font-display uppercase tracking-tighter group-hover:text-primary-500 transition-colors">
                     {stat.value}
                   </div>
-                  <div className="text-sm text-muted-gray">{stat.label}</div>
+                  <div className="text-[10px] font-bold text-cloud-dancer/30 tracking-[0.3em] uppercase">{stat.label}</div>
                 </div>
               ))}
             </div>
-          </motion.div>
-        </div>
+
+            <div className="flex flex-wrap justify-center gap-x-12 gap-y-6">
+              {[
+                'Sviluppo su Misura',
+                'Comunicazione Async',
+                'Nessun Boilerplate',
+                'Supporto Continuo',
+              ].map((feature, index) => (
+                <div key={index} className="flex items-center gap-3">
+                  <div className="w-1 h-1 bg-primary-500" />
+                  <span className="text-[10px] font-bold text-cloud-dancer/50 uppercase tracking-widest">{feature}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   )

@@ -1,4 +1,4 @@
-import { Inter, Syne } from 'next/font/google'
+import { Inter, Space_Grotesk } from 'next/font/google'
 
 export const inter = Inter({
   subsets: ['latin'],
@@ -6,15 +6,15 @@ export const inter = Inter({
   display: 'swap',
 })
 
-export const syne = Syne({
+export const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
-  variable: '--font-syne',
+  variable: '--font-space',
   display: 'swap',
 })
 
 export const fonts = {
   inter,
-  syne,
+  spaceGrotesk,
 }
 
-export const fontVariables = `${inter.variable} ${syne.variable}`
+export const fontVariables = `${inter.variable} ${spaceGrotesk.variable}`

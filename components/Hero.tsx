@@ -28,93 +28,84 @@ export default function Hero() {
   }
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-bg">
+    <section className="relative w-full h-full flex items-center justify-center overflow-hidden bg-gradient-lunar">
       {/* Background Effects */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-near-black/50" />
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary-500/10 rounded-full blur-3xl" />
+        <div className="absolute inset-0 bg-grid-pattern opacity-10" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-gradient-to-b from-primary-500/10 via-transparent to-transparent" />
       </div>
 
       {/* Content */}
       <motion.div
-        className="relative z-10 max-w-5xl mx-auto px-6 text-center"
+        className="relative z-10 max-w-6xl mx-auto px-6 text-center"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
-        <motion.div variants={itemVariants}>
-          <span className="inline-block px-4 py-2 mb-6 text-sm font-medium text-primary-400 bg-primary-500/10 rounded-full border border-primary-500/20">
-            B2B Digital Innovation Studio
-          </span>
-        </motion.div>
-
         <motion.h1
           variants={itemVariants}
-          className="font-display text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight"
+          className="font-display text-7xl md:text-9xl font-bold mb-8 leading-[0.85] tracking-tighter"
         >
-          <span className="text-white">We build </span>
-          <span className="text-gradient">digital products</span>
-          <br />
-          <span className="text-white">that drive growth</span>
+          <span className="text-white block mb-4">COSTRUIAMO CON</span>
+          <span className="text-gradient uppercase">LUNAR LABS</span>
         </motion.h1>
 
         <motion.p
           variants={itemVariants}
-          className="text-lg md:text-xl text-muted-gray max-w-2xl mx-auto mb-10"
+          className="text-lg md:text-xl text-cloud-dancer/80 max-w-2xl mx-auto mb-14 font-medium leading-relaxed"
         >
-          Lunar Labs helps ambitious B2B companies transform ideas into 
-          high-performing digital products. From MVP to scale, we engineer 
-          success through cutting-edge technology and strategic execution.
+          Sviluppiamo MVP ad alte prestazioni con metodo e tecnologie 
+          all&apos;avanguardia. Nessun boilerplate, solo codice puro 
+          e soluzioni su misura costruite per durare.
         </motion.p>
 
         <motion.div
           variants={itemVariants}
-          className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+          className="flex flex-col sm:flex-row gap-6 justify-center items-center"
         >
           <Link href="#contact">
             <motion.button
-              className="group relative px-8 py-4 bg-gradient-primary text-white font-semibold rounded-lg overflow-hidden"
+              className="group relative px-12 py-5 bg-primary-500 text-white font-bold rounded-sm overflow-hidden"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              <span className="relative z-10">Start Your Project</span>
+              <span className="relative z-10 uppercase tracking-widest">Inizia Progetto</span>
               <motion.div
                 className="absolute inset-0 bg-white/20"
                 initial={{ x: '-100%' }}
                 whileHover={{ x: '100%' }}
-                transition={{ duration: 0.4 }}
+                transition={{ duration: 0.3 }}
               />
             </motion.button>
           </Link>
 
           <Link href="#services">
             <motion.button
-              className="px-8 py-4 text-white font-semibold rounded-lg border border-border-gray hover:border-primary-500/50 transition-colors"
+              className="px-12 py-5 text-cloud-dancer font-bold rounded-sm border border-github-border hover:border-primary-500/50 transition-all uppercase tracking-widest bg-github-gray/50"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              View Our Services
+              I Nostri Servizi
             </motion.button>
           </Link>
         </motion.div>
 
-        {/* Stats */}
+        {/* Technical Stats/Strengths */}
         <motion.div
           variants={itemVariants}
-          className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto"
+          className="mt-28 pt-12 border-t border-github-border/50 grid grid-cols-2 md:grid-cols-4 gap-12 max-w-4xl mx-auto"
         >
           {[
-            { value: '50+', label: 'Projects Delivered' },
-            { value: '98%', label: 'Client Satisfaction' },
-            { value: '3x', label: 'Average ROI' },
-            { value: '24/7', label: 'Support' },
+            { value: '100%', label: 'CUSTOM CODE' },
+            { value: 'ASYNC', label: 'WORKFLOW' },
+            { value: 'PERF', label: 'OPTIMIZED' },
+            { value: 'ZERO', label: 'BOILERPLATE' },
           ].map((stat, index) => (
-            <div key={index} className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-white mb-1">
+            <div key={index} className="text-center group">
+              <div className="text-3xl md:text-4xl font-bold text-white mb-2 font-display group-hover:text-primary-500 transition-colors">
                 {stat.value}
               </div>
-              <div className="text-sm text-muted-gray">{stat.label}</div>
+              <div className="text-[10px] tracking-[0.3em] font-bold text-cloud-dancer/40 uppercase">{stat.label}</div>
             </div>
           ))}
         </motion.div>

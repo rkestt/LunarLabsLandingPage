@@ -4,73 +4,64 @@ import { motion } from 'framer-motion'
 
 const footerLinks = {
   services: [
-    { label: 'MVP Development', href: '#services' },
-    { label: 'Custom Software', href: '#services' },
-    { label: 'UI/UX Design', href: '#services' },
-    { label: 'Growth Consulting', href: '#services' },
+    { label: 'Web App', href: '#services' },
+    { label: 'Desktop App', href: '#services' },
+    { label: 'Landing Pages', href: '#services' },
   ],
   company: [
-    { label: 'About Us', href: '#about' },
-    { label: 'Contact', href: '#contact' },
-    { label: 'Careers', href: '#' },
-    { label: 'Blog', href: '#' },
+    { label: 'Chi Siamo', href: '#about' },
+    { label: 'Contatti', href: '#contact' },
   ],
   legal: [
     { label: 'Privacy Policy', href: '#' },
     { label: 'Terms of Service', href: '#' },
-    { label: 'Cookie Policy', href: '#' },
   ],
 }
 
 export default function Footer() {
   return (
-    <footer className="bg-dark-charcoal/50 border-t border-border-gray">
-      <div className="max-w-7xl mx-auto px-6 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
+    <footer className="w-full h-full bg-github-black border-t border-github-border relative overflow-hidden flex flex-col justify-between pt-32 pb-8">
+      <div className="absolute inset-0 bg-grid-pattern opacity-5" />
+      
+      <div className="max-w-7xl mx-auto px-6 py-20 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-16">
           {/* Brand */}
           <div className="lg:col-span-2">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-lg bg-gradient-primary flex items-center justify-center">
-                  <span className="text-white font-bold text-lg">LL</span>
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-10 h-10 border border-primary-500 flex items-center justify-center">
+                  <span className="text-white font-bold text-lg font-display uppercase tracking-tighter">LN</span>
                 </div>
-                <span className="text-xl font-bold text-white font-display">
+                <span className="text-2xl font-bold text-white font-display uppercase tracking-tighter">
                   Lunar Labs
                 </span>
               </div>
-              <p className="text-muted-gray mb-6 max-w-sm">
-                B2B Digital Innovation Studio. We build digital products that 
-                drive growth and transform businesses.
+              <p className="text-sm text-cloud-dancer/40 mb-10 max-w-sm font-medium leading-relaxed">
+                Industrial Digital Engineering. Progettiamo e costruiamo MVP 
+                ad alte prestazioni con standard tecnici rigorosi.
               </p>
-              <div className="flex gap-4">
-                {['twitter', 'linkedin', 'github'].map((social) => (
-                  <a
-                    key={social}
-                    href="#"
-                    className="w-10 h-10 rounded-lg bg-border-gray/50 flex items-center justify-center text-muted-gray hover:text-primary-400 hover:bg-border-gray transition-colors"
-                  >
-                    <span className="text-sm font-medium uppercase">
-                      {social[0]}
-                    </span>
-                  </a>
-                ))}
+              <div className="space-y-4">
+                <p className="text-[10px] font-bold text-primary-500 uppercase tracking-widest">Contact Endpoint</p>
+                <a href="mailto:andrea.fiori.ff@gmail.com" className="text-white hover:text-primary-500 transition-colors font-bold tracking-tight">
+                  andrea.fiori.ff@gmail.com
+                </a>
               </div>
             </motion.div>
           </div>
 
           {/* Services */}
           <div>
-            <h4 className="text-white font-semibold mb-4">Services</h4>
-            <ul className="space-y-3">
+            <h4 className="text-[10px] font-bold text-white mb-8 uppercase tracking-[0.3em]">Services</h4>
+            <ul className="space-y-4">
               {footerLinks.services.map((link) => (
                 <li key={link.label}>
                   <a
                     href={link.href}
-                    className="text-muted-gray hover:text-primary-400 transition-colors"
+                    className="text-xs font-bold text-cloud-dancer/30 hover:text-primary-500 transition-colors uppercase tracking-widest"
                   >
                     {link.label}
                   </a>
@@ -81,13 +72,13 @@ export default function Footer() {
 
           {/* Company */}
           <div>
-            <h4 className="text-white font-semibold mb-4">Company</h4>
-            <ul className="space-y-3">
+            <h4 className="text-[10px] font-bold text-white mb-8 uppercase tracking-[0.3em]">Company</h4>
+            <ul className="space-y-4">
               {footerLinks.company.map((link) => (
                 <li key={link.label}>
                   <a
                     href={link.href}
-                    className="text-muted-gray hover:text-primary-400 transition-colors"
+                    className="text-xs font-bold text-cloud-dancer/30 hover:text-primary-500 transition-colors uppercase tracking-widest"
                   >
                     {link.label}
                   </a>
@@ -98,13 +89,13 @@ export default function Footer() {
 
           {/* Legal */}
           <div>
-            <h4 className="text-white font-semibold mb-4">Legal</h4>
-            <ul className="space-y-3">
+            <h4 className="text-[10px] font-bold text-white mb-8 uppercase tracking-[0.3em]">Legal</h4>
+            <ul className="space-y-4">
               {footerLinks.legal.map((link) => (
                 <li key={link.label}>
                   <a
                     href={link.href}
-                    className="text-muted-gray hover:text-primary-400 transition-colors"
+                    className="text-xs font-bold text-cloud-dancer/30 hover:text-primary-500 transition-colors uppercase tracking-widest"
                   >
                     {link.label}
                   </a>
@@ -114,15 +105,25 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="mt-16 pt-8 border-t border-border-gray">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-sm text-muted-gray">
-              &copy; {new Date().getFullYear()} Lunar Labs. All rights reserved.
+        {/* Technical Bottom Bar */}
+        <div className="mt-24 pt-8 border-t border-github-border/50 flex flex-col md:flex-row justify-between items-center gap-8">
+          <div className="flex items-center gap-6">
+            <p className="text-[8px] font-bold text-cloud-dancer/20 uppercase tracking-[0.5em]">
+              &copy; {new Date().getFullYear()} Lunar Labs. Engineering Stable
             </p>
-            <p className="text-sm text-muted-gray">
-              Crafted with precision in the digital realm.
+            <div className="w-12 h-px bg-github-border/50" />
+            <div className="flex items-center gap-2">
+              <div className="w-1.5 h-1.5 bg-success rounded-full" />
+              <p className="text-[8px] font-bold text-cloud-dancer/20 uppercase tracking-widest">All Systems Operational</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-8">
+            <p className="text-[8px] font-bold text-cloud-dancer/20 uppercase tracking-widest">
+              Built for performance
             </p>
+            <div className="px-3 py-1 border border-github-border text-[8px] font-bold text-primary-500 uppercase tracking-widest">
+              LNR-V2.1
+            </div>
           </div>
         </div>
       </div>

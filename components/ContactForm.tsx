@@ -8,21 +8,37 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Loader2, CheckCircle, AlertCircle } from 'lucide-react'
 
 const formSchema = z.object({
-  name: z.string().min(2, 'Name must be at least 2 characters'),
-  company: z.string().min(2, 'Company name must be at least 2 characters'),
-  email: z.string().email('Please enter a valid email address'),
-  budget: z.string().min(1, 'Please select a budget range'),
-  message: z.string().min(10, 'Message must be at least 10 characters'),
+  name: z.string().min(2, 'Il nome deve avere almeno 2 caratteri'),
+  clientType: z.string().min(1, 'Seleziona il tipo di cliente'),
+  serviceType: z.string().min(1, 'Seleziona il tipo di servizio'),
+  contactType: z.string().min(1, 'Seleziona il metodo di contatto'),
+  contactValue: z.string().min(3, 'Inserisci un contatto valido'),
+  message: z.string().min(10, 'La descrizione deve avere almeno 10 caratteri'),
 })
 
 type FormData = z.infer<typeof formSchema>
 
-const budgetOptions = [
-  { value: '', label: 'Select your budget' },
-  { value: '5k-10k', label: '$5,000 - $10,000' },
-  { value: '10k-25k', label: '$10,000 - $25,000' },
-  { value: '25k-50k', label: '$25,000 - $50,000' },
-  { value: '50k+', label: '$50,000+' },
+const clientOptions = [
+  { value: '', label: 'Seleziona tipo cliente' },
+  { value: 'pmi', label: 'PMI' },
+  { value: 'privato', label: 'Privato' },
+  { value: 'startup', label: 'Startup' },
+  { value: 'altro', label: 'Altro' },
+]
+
+const serviceOptions = [
+  { value: '', label: 'Seleziona servizio' },
+  { value: 'webapp', label: 'Web App' },
+  { value: 'desktop', label: 'Desktop App' },
+  { value: 'landing', label: 'Landing Page' },
+  { value: 'altro', label: 'Altro' },
+]
+
+const contactOptions = [
+  { value: '', label: 'Seleziona metodo', placeholder: 'SCEGLI_METODO' },
+  { value: 'telegram', label: 'Telegram', placeholder: '@USERNAME' },
+  { value: 'whatsapp', label: 'WhatsApp', placeholder: '+39 123...' },
+  { value: 'email', label: 'Email', placeholder: 'NOME@EMAIL.COM' },
 ]
 
 export default function ContactForm() {
@@ -32,39 +48,62 @@ export default function ContactForm() {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors, isSubmitting },
     reset,
   } = useForm<FormData>({
     resolver: zodResolver(formSchema),
   })
 
+  const selectedContactType = watch('contactType')
+  const contactPlaceholder = contactOptions.find(opt => opt.value === selectedContactType)?.placeholder || 'CONTATTO_DETTAGLIO'
+
   const onSubmit = async (data: FormData) => {
     try {
       setSubmitError('')
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500))
-      console.log('Form data:', data)
-      setIsSubmitted(true)
-      reset()
+      
+      // Sostituisci "YOUR_FORMSPREE_ID" con il codice che ti dà Formspree
+      const response = await fetch('https://formspree.io/f/xaqpnkza', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          ...data,
+          _subject: `Nuovo Lead Lunar Labs: ${data.name}`,
+          _target: 'andrea.fiori.ff@gmail.com'
+        })
+      })
+
+      if (response.ok) {
+        setIsSubmitted(true)
+        reset()
+      } else {
+        const errorData = await response.json()
+        setSubmitError(errorData.errors?.[0]?.message || 'Errore durante l\'invio del protocollo.')
+      }
     } catch (error) {
-      setSubmitError('Something went wrong. Please try again.')
+      setSubmitError('Errore di rete. Controlla la tua connessione.')
     }
   }
 
   return (
-    <section id="contact" className="py-24 bg-near-black">
-      <div className="max-w-4xl mx-auto px-6">
+    <section id="contact" className="w-full h-full py-16 bg-github-black relative flex items-center">
+      <div className="absolute inset-0 bg-grid-pattern opacity-5" />
+      
+      <div className="max-w-4xl mx-auto px-6 relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <span className="inline-block px-4 py-2 mb-4 text-sm font-medium text-highlight bg-highlight/10 rounded-full border border-highlight/20">
-            Get In Touch
+        <div className="mb-12 text-center lg:text-left">
+          <span className="inline-block px-3 py-1 mb-4 text-[10px] font-bold tracking-[0.3em] uppercase text-primary-500 border-l-2 border-primary-500">
+            Interface
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 font-display">
-            Let&apos;s Build Something <span className="text-gradient">Amazing</span>
+          <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 font-display tracking-tighter uppercase">
+            CONFIGURA <span className="text-gradient">L&apos;INVIO</span>
           </h2>
-          <p className="text-lg text-muted-gray max-w-2xl mx-auto">
-            Ready to transform your idea into reality? Tell us about your project 
-            and we&apos;ll get back to you within 24 hours.
+          <p className="text-sm text-cloud-dancer/60 max-w-xl font-medium leading-relaxed">
+            Inizializza la comunicazione con il nostro team. 
+            Ogni richiesta viene processata attraverso il nostro workflow asincrono.
           </p>
         </div>
 
@@ -74,191 +113,212 @@ export default function ContactForm() {
             {isSubmitted ? (
               <motion.div
                 key="success"
-                initial={{ opacity: 0, scale: 0.9 }}
+                initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                className="bg-dark-charcoal border border-border-gray rounded-2xl p-12 text-center"
+                exit={{ opacity: 0, scale: 0.98 }}
+                className="bg-github-gray border border-primary-500/30 p-10 text-center glass-card"
               >
-                <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-success/10 flex items-center justify-center">
-                  <CheckCircle className="w-10 h-10 text-success" />
+                <div className="w-12 h-12 mx-auto mb-6 border border-success flex items-center justify-center">
+                  <CheckCircle className="w-6 h-6 text-success" />
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-4">
-                  Message Sent Successfully!
+                <h3 className="text-lg font-bold text-white mb-3 font-display uppercase tracking-tight">
+                  SISTEMA SINCRONIZZATO
                 </h3>
-                <p className="text-muted-gray mb-8">
-                  Thank you for reaching out. We&apos;ll review your project details 
-                  and get back to you within 24 hours.
+                <p className="text-[10px] text-cloud-dancer/40 mb-8 uppercase tracking-widest font-bold">
+                  Dati ricevuti con successo. In attesa di elaborazione asincrona.
                 </p>
                 <button
                   onClick={() => setIsSubmitted(false)}
-                  className="px-6 py-3 text-primary-400 font-medium hover:text-primary-300 transition-colors"
+                  className="px-6 py-2 text-[10px] font-bold text-primary-500 border border-primary-500/30 hover:bg-primary-500/10 transition-colors uppercase tracking-widest"
                 >
-                  Send Another Message
+                  Nuovo Log
                 </button>
               </motion.div>
             ) : (
               <motion.div
                 key="form"
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
+                exit={{ opacity: 0, y: -10 }}
               >
                 <form
                   onSubmit={handleSubmit(onSubmit)}
-                  className="bg-dark-charcoal/50 border border-border-gray rounded-2xl p-8 md:p-12"
+                  className="bg-github-gray/50 border border-github-border p-6 md:p-10 glass-card"
                 >
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     {/* Name */}
-                    <div>
+                    <div className="relative group">
                       <label
                         htmlFor="name"
-                        className="block text-sm font-medium text-white mb-2"
+                        className="block text-[10px] font-bold text-cloud-dancer/40 mb-2 uppercase tracking-[0.2em]"
                       >
-                        Full Name *
+                        Identifier Name
                       </label>
                       <input
                         {...register('name')}
                         type="text"
                         id="name"
-                        className="w-full px-4 py-3 bg-near-black border border-border-gray rounded-lg text-white placeholder:text-muted-gray focus:border-primary-500 focus:ring-1 focus:ring-primary-500 transition-colors"
-                        placeholder="John Doe"
+                        className="w-full bg-transparent border-b border-github-border py-1.5 text-white placeholder:text-github-border focus:outline-none focus:border-primary-500 transition-colors font-medium text-sm"
+                        placeholder="NOME_COMPLETO"
                       />
                       {errors.name && (
-                        <p className="mt-1 text-sm text-error flex items-center gap-1">
-                          <AlertCircle className="w-4 h-4" />
+                        <p className="mt-1.5 text-[10px] font-bold text-error flex items-center gap-2 uppercase tracking-tighter">
+                          <AlertCircle className="w-3 h-3" />
                           {errors.name.message}
                         </p>
                       )}
                     </div>
 
-                    {/* Company */}
-                    <div>
+                    {/* Client Type */}
+                    <div className="relative group">
                       <label
-                        htmlFor="company"
-                        className="block text-sm font-medium text-white mb-2"
+                        htmlFor="clientType"
+                        className="block text-[10px] font-bold text-cloud-dancer/40 mb-2 uppercase tracking-[0.2em]"
                       >
-                        Company *
+                        Client Category
                       </label>
-                      <input
-                        {...register('company')}
-                        type="text"
-                        id="company"
-                        className="w-full px-4 py-3 bg-near-black border border-border-gray rounded-lg text-white placeholder:text-muted-gray focus:border-primary-500 focus:ring-1 focus:ring-primary-500 transition-colors"
-                        placeholder="Acme Inc."
-                      />
-                      {errors.company && (
-                        <p className="mt-1 text-sm text-error flex items-center gap-1">
-                          <AlertCircle className="w-4 h-4" />
-                          {errors.company.message}
+                      <select
+                        {...register('clientType')}
+                        id="clientType"
+                        className="w-full bg-transparent border-b border-github-border py-1.5 text-white focus:outline-none focus:border-primary-500 transition-colors font-medium appearance-none cursor-pointer text-sm"
+                      >
+                        {clientOptions.map((option) => (
+                          <option key={option.value} value={option.value} className="bg-github-gray">
+                            {option.label.toUpperCase()}
+                          </option>
+                        ))}
+                      </select>
+                      {errors.clientType && (
+                        <p className="mt-1.5 text-[10px] font-bold text-error flex items-center gap-2 uppercase tracking-tighter">
+                          <AlertCircle className="w-3 h-3" />
+                          {errors.clientType.message}
                         </p>
                       )}
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    {/* Email */}
-                    <div>
+                    {/* Service Type */}
+                    <div className="relative group">
                       <label
-                        htmlFor="email"
-                        className="block text-sm font-medium text-white mb-2"
+                        htmlFor="serviceType"
+                        className="block text-[10px] font-bold text-cloud-dancer/40 mb-2 uppercase tracking-[0.2em]"
                       >
-                        Email Address *
+                        Service Protocol
                       </label>
-                      <input
-                        {...register('email')}
-                        type="email"
-                        id="email"
-                        className="w-full px-4 py-3 bg-near-black border border-border-gray rounded-lg text-white placeholder:text-muted-gray focus:border-primary-500 focus:ring-1 focus:ring-primary-500 transition-colors"
-                        placeholder="john@company.com"
-                      />
-                      {errors.email && (
-                        <p className="mt-1 text-sm text-error flex items-center gap-1">
-                          <AlertCircle className="w-4 h-4" />
-                          {errors.email.message}
+                      <select
+                        {...register('serviceType')}
+                        id="serviceType"
+                        className="w-full bg-transparent border-b border-github-border py-1.5 text-white focus:outline-none focus:border-primary-500 transition-colors font-medium appearance-none cursor-pointer text-sm"
+                      >
+                        {serviceOptions.map((option) => (
+                          <option key={option.value} value={option.value} className="bg-github-gray">
+                            {option.label.toUpperCase()}
+                          </option>
+                        ))}
+                      </select>
+                      {errors.serviceType && (
+                        <p className="mt-1.5 text-[10px] font-bold text-error flex items-center gap-2 uppercase tracking-tighter">
+                          <AlertCircle className="w-3 h-3" />
+                          {errors.serviceType.message}
                         </p>
                       )}
                     </div>
 
-                    {/* Budget */}
-                    <div>
+                    {/* Contact Type */}
+                    <div className="relative group">
                       <label
-                        htmlFor="budget"
-                        className="block text-sm font-medium text-white mb-2"
+                        htmlFor="contactType"
+                        className="block text-[10px] font-bold text-cloud-dancer/40 mb-2 uppercase tracking-[0.2em]"
                       >
-                        Project Budget *
+                        Contact Channel
                       </label>
                       <select
-                        {...register('budget')}
-                        id="budget"
-                        className="w-full px-4 py-3 bg-near-black border border-border-gray rounded-lg text-white focus:border-primary-500 focus:ring-1 focus:ring-primary-500 transition-colors"
+                        {...register('contactType')}
+                        id="contactType"
+                        className="w-full bg-transparent border-b border-github-border py-1.5 text-white focus:outline-none focus:border-primary-500 transition-colors font-medium appearance-none cursor-pointer text-sm"
                       >
-                        {budgetOptions.map((option) => (
-                          <option key={option.value} value={option.value}>
-                            {option.label}
+                        {contactOptions.map((option) => (
+                          <option key={option.value} value={option.value} className="bg-github-gray">
+                            {option.label.toUpperCase()}
                           </option>
                         ))}
                       </select>
-                      {errors.budget && (
-                        <p className="mt-1 text-sm text-error flex items-center gap-1">
-                          <AlertCircle className="w-4 h-4" />
-                          {errors.budget.message}
+                      {errors.contactType && (
+                        <p className="mt-1.5 text-[10px] font-bold text-error flex items-center gap-2 uppercase tracking-tighter">
+                          <AlertCircle className="w-3 h-3" />
+                          {errors.contactType.message}
                         </p>
                       )}
                     </div>
+                  </div>
+
+                  {/* Contact Value */}
+                  <div className="mb-6">
+                    <label
+                      htmlFor="contactValue"
+                      className="block text-[10px] font-bold text-cloud-dancer/40 mb-2 uppercase tracking-[0.2em]"
+                    >
+                      Contact Detail / ID
+                    </label>
+                    <input
+                      {...register('contactValue')}
+                      type="text"
+                      id="contactValue"
+                      className="w-full bg-transparent border-b border-github-border py-1.5 text-white placeholder:text-github-border focus:outline-none focus:border-primary-500 transition-colors font-medium text-sm"
+                      placeholder={contactPlaceholder}
+                    />
+                    {errors.contactValue && (
+                      <p className="mt-1.5 text-[10px] font-bold text-error flex items-center gap-2 uppercase tracking-tighter">
+                        <AlertCircle className="w-3 h-3" />
+                        {errors.contactValue.message}
+                      </p>
+                    )}
                   </div>
 
                   {/* Message */}
                   <div className="mb-8">
                     <label
                       htmlFor="message"
-                      className="block text-sm font-medium text-white mb-2"
+                      className="block text-[10px] font-bold text-cloud-dancer/40 mb-2 uppercase tracking-[0.2em]"
                     >
-                      Project Details *
+                      Project Specifications
                     </label>
                     <textarea
                       {...register('message')}
                       id="message"
-                      rows={5}
-                      className="w-full px-4 py-3 bg-near-black border border-border-gray rounded-lg text-white placeholder:text-muted-gray focus:border-primary-500 focus:ring-1 focus:ring-primary-500 transition-colors resize-none"
-                      placeholder="Tell us about your project, goals, and timeline..."
+                      rows={3}
+                      className="w-full bg-github-black/50 border border-github-border p-3 text-white placeholder:text-github-border focus:outline-none focus:border-primary-500 transition-colors resize-none font-medium text-sm"
+                      placeholder="DESCRIVI_IL_PROGETTO"
                     />
                     {errors.message && (
-                      <p className="mt-1 text-sm text-error flex items-center gap-1">
-                        <AlertCircle className="w-4 h-4" />
+                      <p className="mt-1.5 text-[10px] font-bold text-error flex items-center gap-2 uppercase tracking-tighter">
+                        <AlertCircle className="w-3 h-3" />
                         {errors.message.message}
                       </p>
                     )}
                   </div>
 
-                  {/* Error Message */}
-                  {submitError && (
-                    <div className="mb-6 p-4 bg-error/10 border border-error/20 rounded-lg flex items-center gap-3">
-                      <AlertCircle className="w-5 h-5 text-error flex-shrink-0" />
-                      <p className="text-error text-sm">{submitError}</p>
-                    </div>
-                  )}
-
                   {/* Submit Button */}
                   <motion.button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full py-4 bg-gradient-primary text-white font-semibold rounded-lg transition-all hover:shadow-glow disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    className="w-full py-4 bg-primary-500 text-white font-bold uppercase tracking-[0.3em] transition-all hover:shadow-purple-glow disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-4 group rounded-sm text-xs"
                     whileHover={{ scale: isSubmitting ? 1 : 1.01 }}
                     whileTap={{ scale: isSubmitting ? 1 : 0.99 }}
                   >
                     {isSubmitting ? (
                       <>
-                        <Loader2 className="w-5 h-5 animate-spin" />
-                        Sending...
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        Processing...
                       </>
                     ) : (
-                      'Send Message'
+                      <>
+                        <span>Invia Protocollo</span>
+                        <div className="w-8 h-px bg-white group-hover:w-12 transition-all" />
+                      </>
                     )}
                   </motion.button>
-
-                  <p className="mt-4 text-center text-sm text-muted-gray">
-                    By submitting, you agree to our privacy policy. We&apos;ll never share your information.
-                  </p>
                 </form>
               </motion.div>
             )}
