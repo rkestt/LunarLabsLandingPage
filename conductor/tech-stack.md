@@ -19,3 +19,9 @@
 
 -   **Strategia:** Containerizzato con Docker
     -   **Descrizione:** L'applicazione (Next.js) e, eventualmente, il CMS Headless (se self-hosted come Strapi) saranno containerizzati utilizzando Docker. Questo garantisce un ambiente di sviluppo e produzione consistente, scalabilità e facilità di deployment su qualsiasi piattaforma che supporti Docker (es. Kubernetes, Docker Swarm, o servizi cloud come AWS ECS/Fargate, Google Cloud Run).
+
+### Docker Configuration
+
+-   **Dockerfile:** Multi-stage build con standalone output per Next.js
+-   **.dockerignore:** Configurato per escludere node_modules, .git, e file di configurazione
+-   **next.config.js:** Output 'standalone' abilitato per ridurre dimensione immagine
