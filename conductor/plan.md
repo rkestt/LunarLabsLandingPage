@@ -2,7 +2,7 @@
 
 ## Phase 1: Infrastructure Setup
 
-- [~] 1.1 Configure Docker for Next.js app
+- [x] 1.1 Configure Docker for Next.js app [9531771]
 - [ ] 1.2 Setup testing framework (Jest + React Testing Library)
 - [ ] 1.3 Add Docker config documentation to tech-stack.md
 
