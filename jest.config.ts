@@ -14,7 +14,9 @@ const customJestConfig: Config = {
     '!/**/*.d.ts',
   ],
   transform: {
-    '^.+\\.(ts|tsx|js|jsx)$': 'babel-jest',
+    '^.+\\.(ts|tsx)$': ['babel-jest', {
+      configFile: './babel.jest.config.js'
+    }],
   },
 }
 
