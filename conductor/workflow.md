@@ -154,16 +154,15 @@ Before marking any task complete, verify:
 
 ### Setup
 ```bash
-# Example: Commands to set up the development environment (e.g., install dependencies, configure database)
-# e.g., for a Node.js project: npm install
-# e.g., for a Go project: go mod tidy
+npm install
 ```
 
 ### Daily Development
 ```bash
-# Example: Commands for common daily tasks (e.g., start dev server, run tests, lint, format)
-# e.g., for a Node.js project: npm run dev, npm test, npm run lint
-# e.g., for a Go project: go run main.go, go test ./..., go fmt ./...
+npm run dev    # Start dev server on http://localhost:3000
+npm run build  # Build for production
+npm run start  # Start production server
+npm run lint   # Run ESLint
 ```
 
 ### Before Committing
