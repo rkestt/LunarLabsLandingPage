@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   description: 'Progettiamo e costruiamo MVP ad alte prestazioni per PMI e privati con standard tecnici rigorosi. Trasparenza, innovazione e sviluppo custom.',
   keywords: ['MVP Development', 'Sviluppo Software Custom', 'PMI Digitalizzazione', 'Web App', 'Desktop App'],
   authors: [{ name: 'Lunar Labs' }],
+  icons: {
+    icon: '/LunarLabsLogo.png',
+  },
   openGraph: {
     title: 'Lunar Labs | Industrial Digital Engineering',
     description: 'Sviluppo di prodotti digitali ad alte prestazioni.',
@@ -28,7 +31,7 @@ const jsonLd = {
   name: 'Lunar Labs',
   description: 'Sviluppo MVP ad alte prestazioni per PMI e privati',
   url: 'https://lunarlabs.dev',
-  logo: 'https://lunarlabs.dev/logo.png',
+  logo: 'https://lunarlabs.dev/LunarLabsLogo.png',
   areaServed: {
     '@type': 'Country',
     name: 'Italy',
