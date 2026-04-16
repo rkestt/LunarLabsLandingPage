@@ -2,6 +2,12 @@
 
 ## Completati ✅
 
+### Fix: About Section Navbar Overlap
+- **File modificato:** `components/About.tsx`
+- **Fix:** Aggiunto pt-20 per evitare che il titolo sia coperto dalla navbar fissa
+- **Commit:** f549214
+- **Stato:** ✅ Completato
+
 ### Step 1: Header Sticky
 - **File creati/modificati:**
   - `components/Header.tsx` (nuovo)
