@@ -2,6 +2,13 @@
 
 ## Completati ✅
 
+### Fix: Logo e Favicon
+- **File modificato:** `app/layout.tsx`
+- **File spostato:** `LunarLabsLogo.png` → `public/LunarLabsLogo.png`
+- **Fix:** Aggiornato riferimenti logo in metadata e aggiunto icons config
+- **Commit:** e6c3b9b
+- **Stato:** ✅ Completato
+
 ### Fix: About Section Navbar Overlap
 - **File modificato:** `components/About.tsx`
 - **Fix:** Aggiunto pt-20 per evitare che il titolo sia coperto dalla navbar fissa
